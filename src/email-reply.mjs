@@ -1,6 +1,6 @@
 import { buildReply, formatDay } from './date-utils.mjs';
 
-export const EMAIL_ENDPOINT = 'https://shipmyform.com/to/dalaran111@gmail.com';
+export const EMAIL_ENDPOINT = 'https://shipmyform.com/f/frm_AEx7s1PNBifjsKpdN49X';
 
 /** @param {{date: string, time: string, activity: string, location: string, coordinates?: {lat: number, lng: number}}} details */
 export function emailFields(details) {
