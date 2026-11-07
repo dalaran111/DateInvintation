@@ -121,14 +121,14 @@ input { min-width: 0; }
 .scene-heading > p { font-size: 11px; line-height: 1.8; color: var(--muted); margin-top: 16px; }
 .button { min-height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 11px; padding: 12px 19px; font-size: 11px; font-weight: 600; line-height: 1.5; transition: background .35s, transform .3s, box-shadow .6s; }
 .button:active { transform: scale(.98); }
-.button-light, .button-glass { position: relative; isolation: isolate; color: #e1edf3; border: 1px solid #cce6fa3b; background: linear-gradient(115deg, #c4e4ff09, #d8eeff15 48%, #b7d8f30a); box-shadow: inset 0 1px #ecf8ff19, 0 0 19px #c7e6ff06, 0 4px 18px #07171c20; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.button-light::before, .button-glass::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: linear-gradient(110deg, transparent 8%, #cdeaff08 34%, #e7f5ff10 51%, transparent 77%); background-size: 200% 100%; opacity: .65; animation: moon-button-sheen 11s ease-in-out infinite; }
-.button-light:hover, .button-glass:hover { border-color: #d1ebff65; background: linear-gradient(115deg, #c4e4ff10, #d8eeff20 48%, #b7d8f310); box-shadow: inset 0 1px #ecf8ff29, 0 0 24px #c7e6ff0e, 0 4px 18px #07171c20; }
-.scene[inert] .button::before { animation-play-state: paused; }
-.button-flame { position: absolute; inset: -28px; z-index: -1; pointer-events: none; opacity: .58; mix-blend-mode: screen; }
+.button-light, .button-glass { position: relative; isolation: isolate; color: #e1edf3; border: 0; background: transparent; box-shadow: none; }
+.button-light::before, .button-glass::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: linear-gradient(110deg, #c4e4ff09 8%, #cdeaff15 34%, #e7f5ff20 51%, #b7d8f30a 77%); background-size: 200% 100%; opacity: .65; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: moon-button-sheen 11s ease-in-out infinite, moon-button-heat 6.5s ease-in-out infinite; }
+.button-light:hover::before, .button-glass:hover::before { background-color: #d8eeff08; }
+.button-flame { position: absolute; inset: -28px; z-index: -1; pointer-events: none; opacity: .78; mix-blend-mode: screen; }
 .flame-source { display: none; }
 .flame-output { position: absolute; inset: 0; height: 100%; width: 100%; pointer-events: none; }
 @keyframes moon-button-sheen { 0%, 100% { background-position: 100% 50%; opacity: .35; } 50% { background-position: 0 50%; opacity: .75; } }
+@keyframes moon-button-heat { 0%, 100% { transform: skewX(0deg) scale(1); } 35% { transform: skewX(.18deg) scale(1.003, 1.016); } 70% { transform: skewX(-.14deg) scale(.999, .99); } }
 .scene-continue { width: 100%; margin-top: 25px; }
 .scene-continue > svg:last-child { margin-left: auto; }
 .quiet-button { display: block; margin: 15px auto 0; padding: 8px; min-height: 38px; font-size: 9px; color: #a5b2a7; text-underline-offset: 4px; }

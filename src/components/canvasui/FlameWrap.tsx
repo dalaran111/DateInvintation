@@ -345,6 +345,16 @@ void main () {
   float detail = clamp(uScale, 0.05, 1.0);
 
   float d0 = sdRoundRect(rel, uRectHalf, corner);
+  if (uHasContent < 0.5 && uDistortion > 0.0) {
+    // Standalone heat shimmer: distort the flame silhouette without DOM capture.
+    float edgeHeat = exp(-abs(d0) / max(uTurbReach, 4.0));
+    vec2 heat = vec2(
+      snoise(rel * 0.045 + vec2(0.0, uTime * 0.9)),
+      snoise(rel * 0.04 + vec2(23.0, -uTime * 0.75))
+    );
+    rel += heat * min(uDistortion, 4.0) * edgeHeat;
+    d0 = sdRoundRect(rel, uRectHalf, corner);
+  }
   float px = rel.x / unit;
   float py = rel.y / unit;
 
@@ -470,13 +480,6 @@ void main () {
   vec3 smokeCol = mix(vec3(0.5), uColor, 0.5);
 
   if (uHasContent < 0.5) {
-    // Keep the glass button's CSS border intact. Standalone flames live outside
-    // its rounded rectangle, rather than drawing a second, eroded inner edge.
-    float outside = S(0.5, 3.5, d0);
-    fireA *= outside * mix(0.3, 1.0, wTop);
-    halo *= outside;
-    glow *= outside;
-    smoke *= outside;
     float sA = clamp(smoke, 0.0, 1.0);
     float a = clamp(fireA + sA * (1.0 - fireA), 0.0, 1.0);
     outColor = vec4(

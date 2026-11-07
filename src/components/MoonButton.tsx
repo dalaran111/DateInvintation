@@ -37,10 +37,10 @@ export default function MoonButton({ children, className = '', type = 'button', 
         const budget = effectBudget(window.innerWidth);
         flame = createFlameWrap({ source: source.current, content: target, output: output.current }, {
           captureContent: false, pixelRatioCap: budget.flameRatio, maxFps: budget.flameFps,
-          color: [0.65, 0.8, 1], intensity: 0.58, height: 25, spread: 10,
-          radius: 12, speed: 0.17, scale: 0.35, turbulence: 0.2,
-          turbulenceScale: 0.5, turbulenceReach: 0, sparks: 0, smoke: 0,
-          rim: 0.62, melt: 0, distortion: 0, ember: 0.22, scorch: 0,
+          color: [0.65, 0.8, 1], intensity: 0.85, height: 30, spread: 12,
+          radius: 12, speed: 0.2, scale: 0.35, turbulence: 0.24,
+          turbulenceScale: 0.5, turbulenceReach: 18, sparks: 0, smoke: 0,
+          rim: 0.9, melt: 0, distortion: 1.6, ember: 0.22, scorch: 0,
         });
       } catch { /* Translucent moonlight styling remains without WebGL. */ }
       finally { loading = false; }
