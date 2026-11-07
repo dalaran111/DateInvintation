@@ -470,6 +470,13 @@ void main () {
   vec3 smokeCol = mix(vec3(0.5), uColor, 0.5);
 
   if (uHasContent < 0.5) {
+    // Keep the glass button's CSS border intact. Standalone flames live outside
+    // its rounded rectangle, rather than drawing a second, eroded inner edge.
+    float outside = S(0.5, 3.5, d0);
+    fireA *= outside * mix(0.3, 1.0, wTop);
+    halo *= outside;
+    glow *= outside;
+    smoke *= outside;
     float sA = clamp(smoke, 0.0, 1.0);
     float a = clamp(fireA + sA * (1.0 - fireA), 0.0, 1.0);
     outColor = vec4(
@@ -643,11 +650,14 @@ export function createFlameWrap(
     const box = htmlInCanvas ? source : content;
     const outRect = output.getBoundingClientRect();
     const boxRect = box.getBoundingClientRect();
-    if (outRect.width > 0 && boxRect.width > 0) {
-      rect.cx = (boxRect.left + boxRect.right) / 2 - outRect.left;
-      rect.cy = outRect.bottom - (boxRect.top + boxRect.bottom) / 2;
-      rect.hx = boxRect.width / 2;
-      rect.hy = boxRect.height / 2;
+    if (outRect.width > 0 && outRect.height > 0 && boxRect.width > 0) {
+      // DOM rectangles include the scene's Motion scale; canvas pixels do not.
+      const scaleX = output.clientWidth / outRect.width;
+      const scaleY = output.clientHeight / outRect.height;
+      rect.cx = ((boxRect.left + boxRect.right) / 2 - outRect.left) * scaleX;
+      rect.cy = (outRect.bottom - (boxRect.top + boxRect.bottom) / 2) * scaleY;
+      rect.hx = boxRect.width / 2 * scaleX;
+      rect.hy = boxRect.height / 2 * scaleY;
     }
     if (htmlInCanvas) {
       const sourceWidth = Math.max(1, Math.round(source.clientWidth * dpr));
